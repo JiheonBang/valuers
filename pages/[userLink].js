@@ -401,9 +401,52 @@ function UserLink({ pageUser, notionUser }) {
 
 export default UserLink;
 
-export async function getStaticProps(context) {
-  const linkDataSet = [];
+// export async function getStaticProps(context) {
+//   const linkDataSet = [];
+//   const givenLink = context.params.userLink;
+//   const userData = await dbService.collection("userInfo").get();
+//   userData.forEach((doc) =>
+//     doc.data().userLink === givenLink ? linkDataSet.push(doc.data()) : null
+//   );
+
+//   const notionDataSet = [];
+//   const notionData = await dbService
+//     .collection("userData")
+//     .orderBy("personaIndex")
+//     .get();
+//   notionData.forEach((doc) => {
+//     doc.data() && doc.data().userId === linkDataSet[0].userId
+//       ? notionDataSet.push(doc.data())
+//       : null;
+//   });
+
+//   return {
+//     props: {
+//       key: givenLink,
+//       pageUser: linkDataSet[0],
+//       notionUser: notionDataSet && notionDataSet,
+//     },
+//     revalidate: 1,
+//   };
+// }
+
+// export async function getStaticPaths() {
+//   const userPaths = [];
+//   const userLinks = await dbService.collection("userInfo").get();
+//   userLinks.forEach((doc) => userPaths.push(doc.data()));
+
+//   const paths = userPaths.map((item) => `/${item.userLink}`);
+
+//   return {
+//     paths: paths,
+//     fallback: true,
+//   };
+// }
+
+export async function getServerSideProps(context) {
   const givenLink = context.params.userLink;
+
+  const linkDataSet = [];
   const userData = await dbService.collection("userInfo").get();
   userData.forEach((doc) =>
     doc.data().userLink === givenLink ? linkDataSet.push(doc.data()) : null
@@ -426,19 +469,5 @@ export async function getStaticProps(context) {
       pageUser: linkDataSet[0],
       notionUser: notionDataSet && notionDataSet,
     },
-    revalidate: 1,
-  };
-}
-
-export async function getStaticPaths() {
-  const userPaths = [];
-  const userLinks = await dbService.collection("userInfo").get();
-  userLinks.forEach((doc) => userPaths.push(doc.data()));
-
-  const paths = userPaths.map((item) => `/${item.userLink}`);
-
-  return {
-    paths: paths,
-    fallback: true,
   };
 }
