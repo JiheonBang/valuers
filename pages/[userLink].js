@@ -30,7 +30,7 @@ function UserLink({ pageUser, notionUser }) {
   const [response, setResponse] = useState({});
   const [clickedPersona, setClickedPersona] = useState(1);
   const [addPopUp, setAddPopUp] = useState(false);
-  const [userNotionData, setUserNotionData] = useState([]);
+  const [userNotionRes, setUserNotionRes] = useState([]);
 
   const getData = () => {
     let b = [];
@@ -41,7 +41,7 @@ function UserLink({ pageUser, notionUser }) {
         .then((resJson) => {
           b.push({ id: item.personaIndex, res: resJson });
         });
-      setUserNotionData(b);
+      setUserNotionRes(b);
     });
   };
 
@@ -58,14 +58,14 @@ function UserLink({ pageUser, notionUser }) {
   }, []);
 
   useEffect(() => {
-    userNotionData.map((item) => {
+    userNotionRes.map((item) => {
       if (item.id === clickedPersona) {
         setResponse(item.res);
       }
     });
   });
 
-  const indexData = notionUser.map((item) => item.personaIndex);
+  const indexData = userNotionRes.map((item) => item.personaIndex);
   const maxNum = (list) => {
     let max;
     if (list.length !== 0) {
@@ -90,7 +90,7 @@ function UserLink({ pageUser, notionUser }) {
     setTextValue("");
     setNotionValue("");
     setColorValue("");
-    notionUser.length > 5
+    userNotionRes.length > 5
       ? alert("페르소나는 5개가 최대입니다.")
       : setAddPopUp(!addPopUp);
   };

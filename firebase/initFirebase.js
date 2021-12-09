@@ -12,8 +12,6 @@ const clientCredentials = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-console.log(process.env.NEXT_PUBLIC_FIREBASE_API_KEY);
-
 if (!firebase.apps.length) {
   firebase.initializeApp(clientCredentials);
 }

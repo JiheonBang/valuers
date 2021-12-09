@@ -166,7 +166,7 @@ export default function Explore({ userData }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const userDataSet = [];
   const userData = await dbService.collection("userInfo").get();
   userData.forEach((doc) => userDataSet.push(doc.data()));
@@ -176,6 +176,5 @@ export async function getStaticProps() {
       key: userDataSet[0].userId,
       userData: userDataSet,
     },
-    revalidate: 1,
   };
 }
