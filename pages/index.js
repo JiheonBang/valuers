@@ -13,15 +13,15 @@ import Grid from "@mui/material/Grid";
 import { ContainedButton, OutlinedButton } from "../components/styledButton";
 
 function Index() {
-  // const router = useRouter();
-  // authService.onAuthStateChanged(async (user) => {
-  //   if (user) {
-  //     const infoSnapshot = await dbService.doc(`userInfo/${user.uid}`).get();
-  //     if (infoSnapshot.exists) {
-  //       router.push(`/loading`);
-  //     }
-  //   }
-  // });
+  const router = useRouter();
+  authService.onAuthStateChanged(async (user) => {
+    if (user) {
+      const infoSnapshot = await dbService.doc(`userInfo/${user.uid}`).get();
+      if (infoSnapshot.exists) {
+        router.push(`/loading`);
+      }
+    }
+  });
   return (
     <>
       <div style={{ margin: 0, padding: 0 }}>

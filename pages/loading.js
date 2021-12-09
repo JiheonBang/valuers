@@ -6,17 +6,17 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 
 function Loading() {
-  // const router = useRouter();
-  // authService.onAuthStateChanged(async (user) => {
-  //   if (user) {
-  //     const infoSnapshot = await dbService.doc(`userInfo/${user.uid}`).get();
-  //     if (infoSnapshot.exists) {
-  //       router.push(`/${infoSnapshot.data().userLink}`);
-  //     } else {
-  //       router.push("/onboarding");
-  //     }
-  //   }
-  // });
+  const router = useRouter();
+  authService.onAuthStateChanged(async (user) => {
+    if (user) {
+      const infoSnapshot = await dbService.doc(`userInfo/${user.uid}`).get();
+      if (infoSnapshot.exists) {
+        router.push(`/${infoSnapshot.data().userLink}`);
+      } else {
+        router.push("/onboarding");
+      }
+    }
+  });
   return (
     <>
       <Box

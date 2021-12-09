@@ -17,14 +17,14 @@ import googleLogo from "../public/google_logo_2_littledeep.png";
 
 function Signup() {
   const router = useRouter();
-  // authService.onAuthStateChanged(async (user) => {
-  //   if (user) {
-  //     const infoSnapshot = await dbService.doc(`userInfo/${user.uid}`).get();
-  //     if (infoSnapshot.exists) {
-  //       router.push(`/loading`);
-  //     }
-  //   }
-  // });
+  authService.onAuthStateChanged(async (user) => {
+    if (user) {
+      const infoSnapshot = await dbService.doc(`userInfo/${user.uid}`).get();
+      if (infoSnapshot.exists) {
+        router.push(`/loading`);
+      }
+    }
+  });
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
