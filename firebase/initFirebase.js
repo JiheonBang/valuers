@@ -16,7 +16,6 @@ console.log(process.env.NEXT_PUBLIC_FIREBASE_API_KEY);
 
 if (!firebase.apps.length) {
   firebase.initializeApp(clientCredentials);
-  console.log("good");
 }
 
 export default firebase;
