@@ -422,7 +422,7 @@ export async function getStaticProps(context) {
 
   return {
     props: {
-      key: linkDataSet[0].userId,
+      key: givenLink,
       pageUser: linkDataSet[0],
       notionUser: notionDataSet && notionDataSet,
     },
