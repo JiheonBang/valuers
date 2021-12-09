@@ -426,6 +426,7 @@ export async function getStaticProps(context) {
       pageUser: linkDataSet[0],
       notionUser: notionDataSet && notionDataSet,
     },
+    fallback: true,
     revalidate: 1,
   };
 }
