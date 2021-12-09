@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
+import Sidebar from "../components/sidebar";
 import { authService, dbService } from "../firebase/initFirebase";
 import { ContainedButton } from "../components/styledButton";
 
@@ -153,183 +154,186 @@ export default function Settings({ userData }) {
   };
 
   return (
-    <Box
-      component="main"
-      sx={{
-        flexGrow: 1,
-        p: 3,
-        width: { sm: "100%", md: "65%" },
-        ml: { md: `25%` },
-      }}
-    >
-      <Grid container style={{ height: "80vh" }}>
-        <Grid item xs={12} md={12} sx={{ mt: { md: "8vh" } }}>
-          <div style={{ fontSize: "1.3rem", marginBottom: "1rem" }}>
-            프로필 정보 변경
-          </div>
-          <Divider />
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          md={5}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <div
+    <>
+      <Sidebar />
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          p: 3,
+          width: { sm: "100%", md: "65%" },
+          ml: { md: `25%` },
+        }}
+      >
+        <Grid container style={{ height: "80vh" }}>
+          <Grid item xs={12} md={12} sx={{ mt: { md: "8vh" } }}>
+            <div style={{ fontSize: "1.3rem", marginBottom: "1rem" }}>
+              프로필 정보 변경
+            </div>
+            <Divider />
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            md={5}
             style={{
-              backgroundColor: "#E7E5FF",
-              width: "150px",
-              height: "150px",
-              borderRadius: "50%",
-              overflow: "hidden",
               display: "flex",
+              flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
             }}
           >
-            {previewURL ? (
-              <Image
-                width="150px"
-                height="150px"
-                src={previewURL}
-                alt="photo"
-              />
-            ) : userInfo.userImage ? (
-              <Image
-                width="150px"
-                height="150px"
-                src={userInfo.userImage}
-                alt="photo"
-              />
-            ) : (
-              <PersonIcon
-                style={{
-                  width: "80%",
-                  height: "80%",
-                  color: "#5254F3",
-                }}
-              />
-            )}
-          </div>
-          <input
-            onChange={changeImage}
-            name="userImage"
-            id="userImage"
-            type="file"
-            accept=".png, .jpg, .jpeg"
-            style={{ display: "none" }}
-          ></input>
-          <label
-            htmlFor="userImage"
+            <div
+              style={{
+                backgroundColor: "#E7E5FF",
+                width: "150px",
+                height: "150px",
+                borderRadius: "50%",
+                overflow: "hidden",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {previewURL ? (
+                <Image
+                  width="150px"
+                  height="150px"
+                  src={previewURL}
+                  alt="photo"
+                />
+              ) : userInfo.userImage ? (
+                <Image
+                  width="150px"
+                  height="150px"
+                  src={userInfo.userImage}
+                  alt="photo"
+                />
+              ) : (
+                <PersonIcon
+                  style={{
+                    width: "80%",
+                    height: "80%",
+                    color: "#5254F3",
+                  }}
+                />
+              )}
+            </div>
+            <input
+              onChange={changeImage}
+              name="userImage"
+              id="userImage"
+              type="file"
+              accept=".png, .jpg, .jpeg"
+              style={{ display: "none" }}
+            ></input>
+            <label
+              htmlFor="userImage"
+              style={{
+                width: "13vmin",
+                textAlign: "center",
+                fontSize: "2vmin",
+                color: "#AAAAAA",
+                padding: "1vmin",
+                marginTop: "1rem",
+                border: "2px solid #AFAFAF",
+                borderRadius: "10px",
+                cursor: "pointer",
+              }}
+            >
+              upload
+            </label>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            md={7}
             style={{
-              width: "13vmin",
-              textAlign: "center",
-              fontSize: "2vmin",
-              color: "#AAAAAA",
-              padding: "1vmin",
-              marginTop: "1rem",
-              border: "2px solid #AFAFAF",
-              borderRadius: "10px",
-              cursor: "pointer",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            upload
-          </label>
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          md={7}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <TextField
-            required
-            name="userName"
-            id="userName"
-            label="이름"
-            variant="outlined"
-            onChange={onChangeData}
-            value={userInfo.userName}
-            sx={{ width: "50vmin", margin: "2rem 0rem" }}
-          />
-          <div style={{ color: "red", marginBottom: "2rem" }}>
             <TextField
               required
-              name="userLink"
-              id="userLink"
-              label="링크"
+              name="userName"
+              id="userName"
+              label="이름"
               variant="outlined"
               onChange={onChangeData}
-              value={userInfo.userLink}
-              sx={{ width: "50vmin" }}
+              value={userInfo.userName}
+              sx={{ width: "50vmin", margin: "2rem 0rem" }}
             />
-            {userInfo.userLink !== givenLink ? (
-              findLink ? (
-                <div style={{ color: "red" }}>이미 존재하는 링크입니다.</div>
-              ) : (
-                <div style={{ color: "blue" }}>사용 가능한 링크입니다.</div>
-              )
-            ) : null}
-          </div>
-          <Stack spacing={4} direction="column" sx={{ mb: "2rem" }}>
-            <Box sx={{ width: "50vmin" }}>
-              <FormControl fullWidth>
-                <InputLabel id="userJob">직무</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="userJob"
-                  name="userJob"
-                  value={userInfo.userJob}
-                  label="직무"
-                  onChange={changeJobData}
-                >
-                  <MenuItem value="대표">대표</MenuItem>
-                  <MenuItem value="기획/PM/PO">기획/PM/PO</MenuItem>
-                  <MenuItem value="디자인">디자인</MenuItem>
-                  <MenuItem value="개발">개발</MenuItem>
-                  <MenuItem value="인사관리">인사관리</MenuItem>
-                  <MenuItem value="영업/마케팅">영업/마케팅</MenuItem>
-                  <MenuItem value="대학생/취업준비">대학생/취업준비</MenuItem>
-                  <MenuItem value="기타">기타</MenuItem>
-                </Select>
-              </FormControl>
-            </Box>
-            <Box sx={{ width: "50vmin" }}>
-              <FormControl fullWidth>
-                <InputLabel id="userCareer">경력</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="userCareer"
-                  name="userCareer"
-                  value={userInfo.userCareer}
-                  label="경력"
-                  onChange={changeCareerData}
-                >
-                  <MenuItem value="취업 전">취업 전</MenuItem>
-                  <MenuItem value="0~1년 차">0~1년 차</MenuItem>
-                  <MenuItem value="2~3년 차">2~3년 차</MenuItem>
-                  <MenuItem value="4~6년 차">4~6년 차</MenuItem>
-                  <MenuItem value="7년 차 이상">7년 차 이상</MenuItem>
-                </Select>
-              </FormControl>
-            </Box>
-          </Stack>
-          <div style={{ marginLeft: "35vmin" }}>
-            <ContainedButton onClick={onFinishClick}>update</ContainedButton>
-          </div>
+            <div style={{ color: "red", marginBottom: "2rem" }}>
+              <TextField
+                required
+                name="userLink"
+                id="userLink"
+                label="링크"
+                variant="outlined"
+                onChange={onChangeData}
+                value={userInfo.userLink}
+                sx={{ width: "50vmin" }}
+              />
+              {userInfo.userLink !== givenLink ? (
+                findLink ? (
+                  <div style={{ color: "red" }}>이미 존재하는 링크입니다.</div>
+                ) : (
+                  <div style={{ color: "blue" }}>사용 가능한 링크입니다.</div>
+                )
+              ) : null}
+            </div>
+            <Stack spacing={4} direction="column" sx={{ mb: "2rem" }}>
+              <Box sx={{ width: "50vmin" }}>
+                <FormControl fullWidth>
+                  <InputLabel id="userJob">직무</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="userJob"
+                    name="userJob"
+                    value={userInfo.userJob}
+                    label="직무"
+                    onChange={changeJobData}
+                  >
+                    <MenuItem value="대표">대표</MenuItem>
+                    <MenuItem value="기획/PM/PO">기획/PM/PO</MenuItem>
+                    <MenuItem value="디자인">디자인</MenuItem>
+                    <MenuItem value="개발">개발</MenuItem>
+                    <MenuItem value="인사관리">인사관리</MenuItem>
+                    <MenuItem value="영업/마케팅">영업/마케팅</MenuItem>
+                    <MenuItem value="대학생/취업준비">대학생/취업준비</MenuItem>
+                    <MenuItem value="기타">기타</MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
+              <Box sx={{ width: "50vmin" }}>
+                <FormControl fullWidth>
+                  <InputLabel id="userCareer">경력</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="userCareer"
+                    name="userCareer"
+                    value={userInfo.userCareer}
+                    label="경력"
+                    onChange={changeCareerData}
+                  >
+                    <MenuItem value="취업 전">취업 전</MenuItem>
+                    <MenuItem value="0~1년 차">0~1년 차</MenuItem>
+                    <MenuItem value="2~3년 차">2~3년 차</MenuItem>
+                    <MenuItem value="4~6년 차">4~6년 차</MenuItem>
+                    <MenuItem value="7년 차 이상">7년 차 이상</MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
+            </Stack>
+            <div style={{ marginLeft: "35vmin" }}>
+              <ContainedButton onClick={onFinishClick}>update</ContainedButton>
+            </div>
+          </Grid>
         </Grid>
-      </Grid>
-    </Box>
+      </Box>
+    </>
   );
 }
 

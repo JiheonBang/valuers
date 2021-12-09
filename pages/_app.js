@@ -3,7 +3,6 @@ import Head from "next/head";
 import "../styles/globals.css";
 // core styles shared by all of react-notion-x (required)
 import "react-notion/src/styles.css";
-import Layout from "../components/layout";
 
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
@@ -30,9 +29,7 @@ function MyApp({ Component, pageProps }) {
           <title>Valuers</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <Component {...pageProps} />
       </Root>
     </>
   );

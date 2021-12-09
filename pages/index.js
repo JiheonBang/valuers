@@ -3,6 +3,7 @@ import { authService, dbService } from "../firebase/initFirebase";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
+import Navbar from "../components/navbar";
 import index1 from "../public/index1.svg";
 import valuers1 from "../public/valuers1.png";
 import valuers2 from "../public/valuers2.png";
@@ -26,6 +27,7 @@ function Index() {
   console.log("get user Info...");
   return (
     <>
+      <Navbar />
       {console.log("starting")}
       <div style={{ margin: 0, padding: 0 }}>
         <Grid
