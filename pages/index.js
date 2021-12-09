@@ -13,6 +13,7 @@ import Grid from "@mui/material/Grid";
 import { ContainedButton, OutlinedButton } from "../components/styledButton";
 
 function Index() {
+  console.log("initializing...");
   const router = useRouter();
   authService.onAuthStateChanged(async (user) => {
     if (user) {
@@ -22,8 +23,10 @@ function Index() {
       }
     }
   });
+  console.log("get user Info...");
   return (
     <>
+      {console.log("starting")}
       <div style={{ margin: 0, padding: 0 }}>
         <Grid
           container

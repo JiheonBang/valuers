@@ -30,9 +30,9 @@ function MyApp({ Component, pageProps }) {
         <title>Valuers</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      {/* <Layout> */}
+      <Component {...pageProps} />
+      {/* </Layout> */}
       {/* </Root> */}
     </>
   );
