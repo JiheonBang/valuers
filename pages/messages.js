@@ -26,14 +26,14 @@ import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import OutboundOutlinedIcon from "@mui/icons-material/OutboundOutlined";
 
-export default function Message() {
-  const [currentUser, setCurrentUser] = useState();
+export default function Messages() {
+  let currentUser;
 
   const router = useRouter();
 
   authService.onAuthStateChanged(async (user) => {
     if (user) {
-      setCurrentUser(user);
+      currentUser = user;
       const infoSnapshot = await dbService.doc(`userInfo/${user.uid}`).get();
       if (!infoSnapshot.exists) {
         router.push(`/loading`);
