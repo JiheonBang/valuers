@@ -223,7 +223,7 @@ export default function Messages() {
                     style={{
                       width: "1vmin",
                       padding: "1vmin 1vmin",
-                      fontSize: "2vmin",
+                      fontSize: "100%",
                     }}
                     type="submit"
                   >
