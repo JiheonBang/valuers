@@ -131,7 +131,7 @@ function Sidebar(props) {
           <a
             href="https://ossified-language-542.notion.site/Valuers-46e2fe1f4c4d4626b46d79b6125c7fe0"
             target="_blank"
-            ref="noreferrer"
+            rel="noreferrer"
           >
             <ListItem button>
               <ListItemIcon>
