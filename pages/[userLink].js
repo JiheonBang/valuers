@@ -34,7 +34,12 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 
 import { NotionAPI } from "notion-client";
-import { NotionRenderer, Collection, CollectionRow } from "react-notion-x";
+import {
+  NotionRenderer,
+  Collection,
+  CollectionRow,
+  Modal,
+} from "react-notion-x";
 
 function UserLink({ pageUser, notionUser, notionRes }) {
   const [currentUser, setCurrentUser] = useState(pageUser);
@@ -116,6 +121,15 @@ function UserLink({ pageUser, notionUser, notionRes }) {
             personaNotion: notionValue,
             personaColor: colorValue,
           })
+          .then(() => {
+            fetch(
+              "https://hooks.slack.com/services/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",
+              {
+                method: "POST",
+                body: JSON.stringify({ text: "User added Notion Data!" }),
+              }
+            );
+          })
           .then(setAddOpen(false))
           .then((res) => window.location.reload())
       : alert("탭 이름과 노션 링크를 입력해 주세요!");
@@ -130,6 +144,15 @@ function UserLink({ pageUser, notionUser, notionRes }) {
               .collection("userData")
               .doc(item.id)
               .delete()
+              .then(() => {
+                fetch(
+                  "https://hooks.slack.com/services/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",
+                  {
+                    method: "POST",
+                    body: JSON.stringify({ text: "User deleted Notion Data!" }),
+                  }
+                );
+              })
               .then((res) => window.location.reload())
           : null;
       });
@@ -666,6 +689,7 @@ function UserLink({ pageUser, notionUser, notionRes }) {
               components={{
                 collection: Collection,
                 collectionRow: CollectionRow,
+                modal: Modal,
               }}
             />
           )}

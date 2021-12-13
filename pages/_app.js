@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import "../styles/globals.css";
 // core styles shared by all of react-notion-x (required)
 import "../styles/notion-styles.css";
 import "prismjs/themes/prism-tomorrow.css";
+import * as gtag from "../lib/gtag";
 
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
@@ -23,6 +25,17 @@ const Root = styled("div")(({ theme }) => ({
 }));
 
 function MyApp({ Component, pageProps }) {
+  const router = useRouter();
+  useEffect(() => {
+    const handleRouteChange = (url) => {
+      gtag.pageview(url);
+    };
+    router.events.on("routeChangeComplete", handleRouteChange);
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router.events]);
+
   return (
     <>
       <Root>

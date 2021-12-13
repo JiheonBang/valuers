@@ -60,6 +60,15 @@ function Signup() {
         await authService
           .createUserWithEmailAndPassword(email, password)
           .then(() => {
+            fetch(
+              "https://hooks.slack.com/services/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",
+              {
+                method: "POST",
+                body: JSON.stringify({ text: "User is Signed Up!" }),
+              }
+            );
+          })
+          .then(() => {
             router.push("/loading");
           });
       } catch (err) {
@@ -90,9 +99,20 @@ function Signup() {
   const socialClick = async (event) => {
     event.preventDefault();
     const provider = new firebase.auth.GoogleAuthProvider();
-    await authService.signInWithPopup(provider).then(() => {
-      router.push("/loading");
-    });
+    await authService
+      .signInWithPopup(provider)
+      .then(() => {
+        fetch(
+          "https://hooks.slack.com/services/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",
+          {
+            method: "POST",
+            body: JSON.stringify({ text: "User is Signed Up!" }),
+          }
+        );
+      })
+      .then(() => {
+        router.push("/loading");
+      });
   };
 
   return (

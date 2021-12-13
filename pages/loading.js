@@ -10,7 +10,7 @@ function Loading() {
   authService.onAuthStateChanged(async (user) => {
     if (user) {
       const infoSnapshot = await dbService.doc(`userInfo/${user.uid}`).get();
-      if (infoSnapshot.data().userLink) {
+      if (infoSnapshot.data() && infoSnapshot.data().userLink) {
         router.push(`/${infoSnapshot.data().userLink}`);
       } else {
         router.push("/onboarding");
