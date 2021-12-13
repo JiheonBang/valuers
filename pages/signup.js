@@ -60,13 +60,10 @@ function Signup() {
         await authService
           .createUserWithEmailAndPassword(email, password)
           .then(() => {
-            fetch(
-              "https://hooks.slack.com/services/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",
-              {
-                method: "POST",
-                body: JSON.stringify({ text: "User is Signed Up!" }),
-              }
-            );
+            fetch(process.env.NEXT_PUBLIC_SLACK_CONFIG_SIGNUP, {
+              method: "POST",
+              body: JSON.stringify({ text: "User is Signed Up!" }),
+            });
           })
           .then(() => {
             router.push("/loading");
@@ -102,13 +99,10 @@ function Signup() {
     await authService
       .signInWithPopup(provider)
       .then(() => {
-        fetch(
-          "https://hooks.slack.com/services/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",
-          {
-            method: "POST",
-            body: JSON.stringify({ text: "User is Signed Up!" }),
-          }
-        );
+        fetch(process.env.NEXT_PUBLIC_SLACK_CONFIG_SIGNUP, {
+          method: "POST",
+          body: JSON.stringify({ text: "User is Signed Up!" }),
+        });
       })
       .then(() => {
         router.push("/loading");

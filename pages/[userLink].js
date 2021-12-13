@@ -122,13 +122,10 @@ function UserLink({ pageUser, notionUser, notionRes }) {
             personaColor: colorValue,
           })
           .then(() => {
-            fetch(
-              "https://hooks.slack.com/services/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",
-              {
-                method: "POST",
-                body: JSON.stringify({ text: "User added Notion Data!" }),
-              }
-            );
+            fetch(process.env.NEXT_PUBLIC_SLACK_CONFIG_NOTION, {
+              method: "POST",
+              body: JSON.stringify({ text: "User added Notion Data!" }),
+            });
           })
           .then(setAddOpen(false))
           .then((res) => window.location.reload())
@@ -145,13 +142,10 @@ function UserLink({ pageUser, notionUser, notionRes }) {
               .doc(item.id)
               .delete()
               .then(() => {
-                fetch(
-                  "https://hooks.slack.com/services/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",
-                  {
-                    method: "POST",
-                    body: JSON.stringify({ text: "User deleted Notion Data!" }),
-                  }
-                );
+                fetch(process.env.NEXT_PUBLIC_SLACK_CONFIG_NOTION, {
+                  method: "POST",
+                  body: JSON.stringify({ text: "User deleted Notion Data!" }),
+                });
               })
               .then((res) => window.location.reload())
           : null;
