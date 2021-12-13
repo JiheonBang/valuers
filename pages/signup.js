@@ -61,7 +61,7 @@ function Signup() {
           .createUserWithEmailAndPassword(email, password)
           .then(() => {
             fetch(
-              "https://hooks.slack.com/services/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",
+              "https://hooks.slack.com/services/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",
               {
                 method: "POST",
                 body: JSON.stringify({ text: "User is Signed Up!" }),
@@ -103,7 +103,7 @@ function Signup() {
       .signInWithPopup(provider)
       .then(() => {
         fetch(
-          "https://hooks.slack.com/services/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",
+          "https://hooks.slack.com/services/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",
           {
             method: "POST",
             body: JSON.stringify({ text: "User is Signed Up!" }),
