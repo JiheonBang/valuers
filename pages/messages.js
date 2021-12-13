@@ -27,13 +27,13 @@ import IconButton from "@mui/material/IconButton";
 import OutboundOutlinedIcon from "@mui/icons-material/OutboundOutlined";
 
 export default function Message() {
-  let currentUser;
+  const [currentUser, setCurrentUser] = useState();
 
   const router = useRouter();
 
   authService.onAuthStateChanged(async (user) => {
     if (user) {
-      currentUser = user;
+      setCurrentUser(user);
       const infoSnapshot = await dbService.doc(`userInfo/${user.uid}`).get();
       if (!infoSnapshot.exists) {
         router.push(`/loading`);
@@ -119,6 +119,7 @@ export default function Message() {
       sendFromId: currentUser.uid,
       sendToId: currentTab,
       createdAt: Date.now(),
+      userId: currentUser.uid,
     });
   };
 

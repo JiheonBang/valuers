@@ -21,10 +21,7 @@ function Login() {
   const router = useRouter();
   authService.onAuthStateChanged(async (user) => {
     if (user) {
-      const infoSnapshot = await dbService.doc(`userInfo/${user.uid}`).get();
-      if (infoSnapshot.exists) {
-        router.push(`/loading`);
-      }
+      router.push(`/loading`);
     }
   });
 

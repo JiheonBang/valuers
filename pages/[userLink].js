@@ -125,7 +125,6 @@ function UserLink({ pageUser, notionUser, notionRes }) {
     const ok = window.confirm("정말 지우시겠습니까?");
     if (ok) {
       notionUser.map((item) => {
-        console.log(item);
         item.personaIndex === +id
           ? dbService
               .collection("userData")
@@ -150,6 +149,7 @@ function UserLink({ pageUser, notionUser, notionRes }) {
         sendToId: pageUser.userId,
         chatContent: contactText,
         createdAt: Date.now(),
+        userId: currentUser.uid,
       });
       setContactOpen(false);
       alert(
