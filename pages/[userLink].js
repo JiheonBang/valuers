@@ -406,8 +406,8 @@ function UserLink({ pageUser, notionUser, notionRes }) {
         >
           <div
             style={{
-              width: "12vw",
-              height: "12vw",
+              width: "10vw",
+              height: "10vw",
               minWidth: "9rem",
               minHeight: "9rem",
               borderRadius: "50%",
@@ -416,6 +416,7 @@ function UserLink({ pageUser, notionUser, notionRes }) {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              marginBottom: "1rem",
             }}
           >
             {pageUser.userImage ? (
@@ -449,7 +450,7 @@ function UserLink({ pageUser, notionUser, notionRes }) {
                 style={{
                   fontSize: "200%",
                   fontWeight: "600",
-                  marginBottom: "3.5vmin",
+                  marginBottom: "2.5vmin",
                 }}
               >
                 {pageUser.userName}

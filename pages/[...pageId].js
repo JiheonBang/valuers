@@ -183,22 +183,25 @@ function NotionPage({ recordMap, pageId, pageUser }) {
         >
           <div
             style={{
-              width: "22vmin",
-              height: "22vmin",
+              width: "10vw",
+              height: "10vw",
+              minWidth: "9rem",
+              minHeight: "9rem",
               borderRadius: "50%",
               overflow: "hidden",
               backgroundColor: "#E7E5FF",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              marginBottom: "1rem",
             }}
           >
             {pageUser.userImage ? (
               <Image
                 src={pageUser.userImage}
                 alt="profile image"
-                width="200%"
-                height="200%"
+                width="210%"
+                height="210%"
               />
             ) : (
               <PersonIcon
@@ -222,16 +225,16 @@ function NotionPage({ recordMap, pageId, pageUser }) {
             <div style={{ marginLeft: "2rem" }}>
               <div
                 style={{
-                  fontSize: "5vmin",
+                  fontSize: "200%",
                   fontWeight: "600",
-                  marginBottom: "3.5vmin",
+                  marginBottom: "2.5vmin",
                 }}
               >
                 {pageUser.userName}
               </div>
               <span
                 style={{
-                  fontSize: "2vmin",
+                  fontSize: "100%",
                   fontWeight: "600",
                   padding: "1vmin",
                   backgroundColor: setColor(pageUser.userJob),
@@ -242,7 +245,7 @@ function NotionPage({ recordMap, pageId, pageUser }) {
               </span>
               <span
                 style={{
-                  fontSize: "2vmin",
+                  fontSize: "100%",
                   fontWeight: "600",
                   padding: "1vmin",
                   backgroundColor: "#eeeeee",
@@ -255,7 +258,11 @@ function NotionPage({ recordMap, pageId, pageUser }) {
             </div>
             <div>
               {currentUser && currentUser.uid !== pageUser.userId ? (
-                <Tooltip title="새로운 기회를 만들어 보세요!" arrow>
+                <Tooltip
+                  sx={{ display: { xs: "none", md: "inherit" } }}
+                  title="새로운 기회를 만들어 보세요!"
+                  arrow
+                >
                   <OutlinedButton onClick={() => setContactOpen(true)}>
                     Contact
                   </OutlinedButton>
