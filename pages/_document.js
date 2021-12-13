@@ -28,7 +28,7 @@ export default class MyDocument extends Document {
           <meta property="og:type" content="website" />
           <meta
             property="og:image"
-            content="https://res-console.cloudinary.com/valuers/thumbnails/v1/image/upload/v1639401500/R3JvdXBfMl9zZzg1OGc=/grid/"
+            content="https://res.cloudinary.com/valuers/image/upload/v1639408745/userImage/Picture1_vpj5qf.png"
           />
           <meta property="og:title" content="Valuers" />
           <meta
