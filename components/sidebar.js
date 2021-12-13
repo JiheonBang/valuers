@@ -18,6 +18,7 @@ import ListItemText from "@mui/material/ListItemText";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -60,6 +61,11 @@ function Sidebar(props) {
       path: "/explore",
       icon: <RocketLaunchIcon />,
     },
+    {
+      title: "Messages",
+      path: "/messages",
+      icon: <MailIcon />,
+    },
   ];
   const router = useRouter();
   const Logout = () => {
@@ -71,6 +77,8 @@ function Sidebar(props) {
     a = "Profile";
   } else if (router.asPath === "/settings") {
     a = "Settings";
+  } else if (router.asPath === "/messages") {
+    a = "Messages";
   } else {
     a = "Explore";
   }
@@ -118,16 +126,19 @@ function Sidebar(props) {
             </ListItem>
           </Link>
         ))}
-        <Tooltip title="열심히 준비 중입니다!" arrow>
-          <ListItem button style={{ cursor: "not-allowed" }}>
-            <ListItemIcon>
-              <MailIcon />
-            </ListItemIcon>
-            <ListItemText>Messages</ListItemText>
-          </ListItem>
-        </Tooltip>
-        <List style={{ marginTop: "45vh" }}>
+        <List style={{ marginTop: "40vh" }}>
           <Divider style={{ marginBottom: "1rem" }} />
+          <a
+            href="https://ossified-language-542.notion.site/Valuers-46e2fe1f4c4d4626b46d79b6125c7fe0"
+            target="_blank"
+          >
+            <ListItem button>
+              <ListItemIcon>
+                <HelpOutlineIcon />
+              </ListItemIcon>
+              <ListItemText>Help</ListItemText>
+            </ListItem>
+          </a>
           <Link href="/settings" passHref>
             <ListItem
               button

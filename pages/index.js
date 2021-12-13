@@ -49,11 +49,12 @@ function Index() {
               <ContainedButton
                 type="contained"
                 sx={{
-                  height: "8vmin",
-                  width: "25vmin",
-                  fontSize: "3vmin",
-                  marginTop: "1rem",
-                  marginBottom: { xs: "0", md: "3rem" },
+                  height: "fit-content",
+                  width: "fit-content",
+                  fontSize: "130%",
+                  marginTop: "2vmin",
+                  marginBottom: { xs: "2rem", md: "3rem" },
+                  zIndex: 1,
                 }}
               >
                 Get Started
@@ -133,7 +134,7 @@ function Index() {
         <Grid
           container
           sx={{
-            padding: "20px",
+            padding: "20px 0",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -176,11 +177,12 @@ function Index() {
               <ContainedButton
                 type="contained"
                 sx={{
-                  height: "8vmin",
-                  width: "25vmin",
-                  fontSize: "3vmin",
-                  marginTop: "1rem",
-                  marginBottom: "3rem",
+                  height: "fit-content",
+                  width: "fit-content",
+                  fontSize: "130%",
+                  marginTop: "2vmin",
+                  marginBottom: { xs: "2rem", md: "3rem" },
+                  zIndex: 1,
                 }}
               >
                 Get Started

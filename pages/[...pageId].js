@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { NotionRenderer, BlockMapType } from "react-notion";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
+
+import { NotionAPI } from "notion-client";
+import { NotionRenderer, Collection, CollectionRow } from "react-notion-x";
 
 import { authService, dbService } from "../firebase/initFirebase";
 import Sidebar from "../components/sidebar";
@@ -35,9 +37,9 @@ export async function getServerSideProps(context) {
     return;
   }
 
-  const data = await fetch(
-    `https://notion-api.splitbee.io/v1/page/${pageId[1]}`
-  ).then((res) => res.json());
+  const notion = new NotionAPI();
+  let notionRes = [];
+  const data = await notion.getPage(pageId[1]);
 
   const linkDataSet = [];
   const userData = await dbService.collection("userInfo").get();
@@ -47,15 +49,16 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      blockMap: data,
+      recordMap: data,
       pageId: pageId,
       pageUser: linkDataSet[0],
     },
   };
 }
 
-function NotionPage({ blockMap, pageId, pageUser }) {
+function NotionPage({ recordMap, pageId, pageUser }) {
   const [currentUser, setCurrentUser] = useState(pageUser);
+  const [contactOpen, setContactOpen] = useState(false);
 
   authService.onAuthStateChanged((user) => {
     if (user) {
@@ -87,6 +90,74 @@ function NotionPage({ blockMap, pageId, pageUser }) {
         return "#eeeeee";
     }
   };
+
+  const [contactText, setContactText] = useState();
+  const contactTextChange = (e) => {
+    setContactText(e.target.value);
+  };
+
+  const contactSubmit = (e) => {
+    e.preventDefault();
+    if (contactText) {
+      dbService.collection("userChat").add({
+        sendFromId: currentUser.uid,
+        sendToId: pageUser.userId,
+        chatContent: contactText,
+        createdAt: Date.now(),
+      });
+      setContactOpen(false);
+      alert(
+        `성공적으로 보내졌습니다.\n좌측의 messages 탭에서 확인할 수 있습니다!`
+      );
+    } else {
+      alert("메시지를 입력해 주세요!");
+    }
+  };
+
+  const contactPopUp = (
+    <Dialog
+      open={contactOpen}
+      onClose={() => {
+        setContactOpen(false);
+      }}
+    >
+      <DialogTitle>Contact</DialogTitle>
+      <DialogContent>
+        <DialogContentText>지금 정중하게 메시지를 보내,</DialogContentText>
+        <DialogContentText>새로운 기회를 만들어 보세요.</DialogContentText>
+        <DialogContentText sx={{ fontSize: "80%", color: "red" }}>
+          내 프로필이 자세할수록 답장 확률이 올라가요!
+        </DialogContentText>
+        <TextField
+          required
+          autoFocus
+          multiline
+          rows={6}
+          id="chatContent"
+          name="chatContent"
+          label="Message"
+          type="text"
+          fullWidth
+          variant="outlined"
+          onChange={contactTextChange}
+          sx={{ mt: "1.5rem", mb: "1rem", minWidth: "30vw" }}
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button
+          style={{ color: "#AFAFAF" }}
+          onClick={() => {
+            setContactOpen(false);
+          }}
+        >
+          취소
+        </Button>
+        <Button style={{ color: "#5254F3" }} onClick={contactSubmit}>
+          보내기
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
 
   return (
     <>
@@ -184,25 +255,24 @@ function NotionPage({ blockMap, pageId, pageUser }) {
             </div>
             <div>
               {currentUser && currentUser.uid !== pageUser.userId ? (
-                <Tooltip title="열심히 준비 중입니다!" arrow>
-                  <OutlinedButton style={{ cursor: "not-allowed" }}>
+                <Tooltip title="새로운 기회를 만들어 보세요!" arrow>
+                  <OutlinedButton onClick={() => setContactOpen(true)}>
                     Contact
                   </OutlinedButton>
                 </Tooltip>
               ) : null}
+              {contactOpen ? contactPopUp : null}
             </div>
           </div>
         </div>
         <div>
           <NotionRenderer
-            blockMap={blockMap}
+            recordMap={recordMap}
             fullPage={false}
-            customBlockComponents={{
-              page: ({ blockValue, renderComponent }) => (
-                <Link href={`/${pageId[0]}/${blockValue.id}`}>
-                  {renderComponent()}
-                </Link>
-              ),
+            mapPageUrl={(path) => `/${pageUser.userLink}/` + path}
+            components={{
+              collection: Collection,
+              collectionRow: CollectionRow,
             }}
           />
         </div>

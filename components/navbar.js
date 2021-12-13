@@ -10,14 +10,14 @@ export default function Navbar() {
     <nav
       style={{
         width: "100%",
-        height: "70px",
-        padding: "50px 30px",
+        height: "60px",
+        padding: "5vmin 3vmin",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
         position: "fixed",
         backgroundColor: "white",
-        zIndex: 1,
+        zIndex: 2,
       }}
     >
       <div style={{ cursor: "pointer" }}>

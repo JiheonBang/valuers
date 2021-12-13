@@ -4,6 +4,8 @@ import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { ContainedButton, TextButton } from "../components/styledButton";
+
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -11,7 +13,6 @@ import Divider from "@mui/material/Divider";
 import auth1 from "../public/auth1.png";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import { ContainedButton, TextButton } from "../components/styledButton";
 import logobox from "../public/logobox.png";
 import Chip from "@mui/material/Chip";
 import googleLogo from "../public/google_logo_2_littledeep.png";
@@ -30,7 +31,6 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  let user;
   const onChange = (event) => {
     const {
       target: { name, value },
@@ -41,6 +41,7 @@ function Login() {
       setPassword(value);
     }
   };
+
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -48,7 +49,24 @@ function Login() {
         router.push("/loading");
       });
     } catch (err) {
-      alert(err.message);
+      if (
+        err.message ===
+        "Firebase: The email address is badly formatted. (auth/invalid-email)."
+      ) {
+        alert("이메일 형식이 올바르지 않습니다.");
+      } else if (
+        err.message ===
+        "Firebase: There is no user record corresponding to this identifier. The user may have been deleted. (auth/user-not-found)."
+      ) {
+        alert("가입되지 않은 계정입니다.");
+      } else if (
+        err.message ===
+        "Firebase: The password is invalid or the user does not have a password. (auth/wrong-password)."
+      ) {
+        alert("잘못된 비밀번호입니다. 비밀번호를 확인해 주세요.");
+      } else {
+        alert(err.message);
+      }
     }
   };
 
@@ -142,9 +160,16 @@ function Login() {
               Continue with Google
             </span>
           </button>
-          <Divider>
-            <Chip label="or" />
-          </Divider>
+          <Box
+            sx={{
+              "& > :not(style)": { m: 1, width: "65vmin" },
+            }}
+          >
+            <Divider>
+              <span style={{ color: "#AFAFAF" }}>or</span>
+            </Divider>
+          </Box>
+
           <Box
             component="form"
             sx={{

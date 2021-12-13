@@ -70,14 +70,15 @@ export default function Explore({ userData }) {
             <Grid
               key={each.userId}
               item
-              xs={3.5}
-              md={isLoggedIn ? 2.4 : 2}
+              xs={5.7}
+              md={isLoggedIn ? 2.6 : 2.2}
               style={{
                 margin: "1vmin",
                 padding: 0,
-                height: "30vmin",
-                border: "1px solid #AFAFAF",
-                borderRadius: "1vmin",
+                height: "35vmin",
+                minHeight: "12rem",
+                border: "1px solid #eeeeee",
+                borderRadius: "10px",
               }}
             >
               <ExploreButtonBase
@@ -95,22 +96,25 @@ export default function Explore({ userData }) {
                 >
                   <div
                     style={{
-                      width: "15vmin",
-                      height: "15vmin",
+                      width: "13vmin",
+                      height: "13vmin",
+                      minWidth: "5rem",
+                      minHeight: "5rem",
                       borderRadius: "50%",
                       overflow: "hidden",
                       backgroundColor: "#E7E5FF",
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
+                      marginTop: "-0.5rem",
                     }}
                   >
                     {each.userImage ? (
                       <Image
                         src={each.userImage}
                         alt="profile image"
-                        width="200%"
-                        height="200%"
+                        width="230%"
+                        height="230%"
                       />
                     ) : (
                       <PersonIcon
@@ -125,16 +129,16 @@ export default function Explore({ userData }) {
                   <div>
                     <div
                       style={{
-                        fontSize: "3vmin",
+                        fontSize: "150%",
                         fontWeight: "600",
-                        margin: "2vmin 0vmin",
+                        margin: "1.2rem 0vmin 1rem 0",
                       }}
                     >
                       {each.userName}
                     </div>
                     <span
                       style={{
-                        fontSize: "1.5vmin",
+                        fontSize: "90%",
                         fontWeight: "600",
                         padding: "1vmin",
                         backgroundColor: setColor(each.userJob),
@@ -145,7 +149,7 @@ export default function Explore({ userData }) {
                     </span>
                     <span
                       style={{
-                        fontSize: "1.5vmin",
+                        fontSize: "90%",
                         fontWeight: "600",
                         padding: "1vmin",
                         backgroundColor: "#eeeeee",
@@ -171,10 +175,21 @@ export async function getServerSideProps() {
   const userData = await dbService.collection("userInfo").get();
   userData.forEach((doc) => userDataSet.push(doc.data()));
 
+  const notionDataSet = [];
+  const notionData = await dbService.collection("userData").get();
+  notionData.forEach((doc) => notionDataSet.push(doc.data()));
+
+  let existDataSet = [];
+  userDataSet.map((item) => {
+    notionDataSet.map((each) => {
+      item.userId === each.userId ? existDataSet.push(item) : null;
+    });
+  });
+
   return {
     props: {
       key: userDataSet[0].userId,
-      userData: userDataSet,
+      userData: Array.from(new Set(existDataSet)),
     },
   };
 }

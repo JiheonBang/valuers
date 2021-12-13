@@ -36,7 +36,7 @@ export const OutlinedButton = styled(Button)({
 export const ContainedButton = styled(Button)({
   boxShadow: "none",
   textTransform: "none",
-  fontSize: "2.5vmin",
+  fontSize: "130%",
   padding: "1vmin 2.5vmin",
   lineHeight: 1.5,
   backgroundColor: "#5254F3",
@@ -66,7 +66,7 @@ export const ContainedButton = styled(Button)({
 export const TextButton = styled(Button)({
   boxShadow: "none",
   textTransform: "none",
-  fontSize: "2.5vmin",
+  fontSize: "130%",
   padding: "1vmin 2.5vmin",
   lineHeight: 1.5,
   color: "black",
@@ -113,7 +113,8 @@ export const PersonaButton = styled(Button)({
 export const PersonaButton2 = styled(Button)({
   boxShadow: "none",
   textTransform: "none",
-  fontSize: "1.5rem",
+  fontSize: "150%",
+  width: "0px",
   lineHeight: 1.5,
   color: "black",
   fontFamily: [
@@ -164,9 +165,11 @@ export const ExploreButtonBase = styled(ButtonBase)({
   width: "100%",
   height: "100%",
   margin: 0,
+  borderRadius: "10px",
   boxShadow: "0 10px 35px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.1)",
   transition: "box-shadow 300ms ease-in-out, transform 300ms ease-in-out",
   "&:hover": {
     boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 4px rgba(0, 0, 0, 0.2)",
+    borderRadius: "10px",
   },
 });

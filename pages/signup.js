@@ -66,7 +66,24 @@ function Signup() {
             router.push("/loading");
           });
       } catch (err) {
-        alert(err.message);
+        if (
+          err.message ===
+          "Firebase: The email address is already in use by another account. (auth/email-already-in-use)."
+        ) {
+          alert("이미 가입된 계정이 있습니다.");
+        } else if (
+          err.message ===
+          "Firebase: The email address is badly formatted. (auth/invalid-email)."
+        ) {
+          alert("이메일 형식이 올바르지 않습니다.");
+        } else if (
+          err.message ===
+          "Firebase: Password should be at least 6 characters (auth/weak-password)."
+        ) {
+          alert("비밀번호를 최소 6자 이상 작성해 주세요.");
+        } else {
+          alert(err.message);
+        }
       }
     } else {
       alert("비밀번호를 확인해 주세요.");
@@ -169,9 +186,15 @@ function Signup() {
               Continue with Google
             </span>
           </button>
-          <Divider>
-            <Chip label="or" />
-          </Divider>
+          <Box
+            sx={{
+              "& > :not(style)": { m: 1, width: "65vmin" },
+            }}
+          >
+            <Divider>
+              <span style={{ color: "#AFAFAF" }}>or</span>
+            </Divider>
+          </Box>
           <Box
             component="form"
             sx={{
