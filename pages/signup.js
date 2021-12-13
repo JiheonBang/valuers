@@ -90,12 +90,6 @@ function Signup() {
     }
   };
 
-  const uiConfig = {
-    signInSuccessUrl: "/loading",
-    signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
-    signInFlow: "popup",
-  };
-
   const socialClick = async (event) => {
     event.preventDefault();
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -152,7 +146,7 @@ function Signup() {
         >
           <div
             style={{
-              fontSize: "230%",
+              fontSize: "200%",
               marginBottom: "1rem",
               width: "65vmin",
               textAlign: "start",
@@ -246,8 +240,7 @@ function Signup() {
               )
             ) : null}
             <ContainedButton
-              style={{ padding: "1rem 0rem", fontSize: "2.5vmin" }}
-              variant="outlined"
+              style={{ padding: "0.5rem 0rem", fontSize: "130%" }}
               type="submit"
             >
               Sign Up

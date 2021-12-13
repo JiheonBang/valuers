@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "../components/navbar";
-import index1 from "../public/index1.svg";
+import index1 from "../public/index1.png";
 import valuers1 from "../public/valuers1.png";
 import valuers2 from "../public/valuers2.png";
 import valuers3 from "../public/valuers3.png";
@@ -68,7 +68,7 @@ function Index() {
                 justifyContent: "center",
                 width: "100%",
                 heigth: "100%",
-                marginTop: "-4rem",
+                marginTop: "-2rem",
               }}
             >
               <Image src={index1} alt="index1" />
