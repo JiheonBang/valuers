@@ -34,12 +34,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 
 import { NotionAPI } from "notion-client";
-import {
-  NotionRenderer,
-  Collection,
-  CollectionRow,
-  Modal,
-} from "react-notion-x";
+import { NotionRenderer, Collection, CollectionRow } from "react-notion-x";
 
 function UserLink({ pageUser, notionUser, notionRes }) {
   const [currentUser, setCurrentUser] = useState(pageUser);
@@ -111,7 +106,7 @@ function UserLink({ pageUser, notionUser, notionRes }) {
 
   const addSubmit = (e) => {
     e.preventDefault();
-    notionValue
+    textValue && notionValue
       ? dbService
           .collection("userData")
           .add({
@@ -683,7 +678,6 @@ function UserLink({ pageUser, notionUser, notionRes }) {
               components={{
                 collection: Collection,
                 collectionRow: CollectionRow,
-                modal: Modal,
               }}
             />
           )}

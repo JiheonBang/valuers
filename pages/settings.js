@@ -181,6 +181,7 @@ export default function Settings({ userData }) {
               flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
+              margin: "1rem 0rem",
             }}
           >
             <div
@@ -230,13 +231,13 @@ export default function Settings({ userData }) {
             <label
               htmlFor="userImage"
               style={{
-                width: "13vmin",
+                width: "fit-content",
                 textAlign: "center",
-                fontSize: "2vmin",
+                fontSize: "100%",
                 color: "#AAAAAA",
-                padding: "1vmin",
-                marginTop: "1rem",
+                padding: "1vmin 2vmin",
                 border: "2px solid #AFAFAF",
+                marginTop: "1rem",
                 borderRadius: "10px",
                 cursor: "pointer",
               }}
@@ -327,8 +328,19 @@ export default function Settings({ userData }) {
                 </FormControl>
               </Box>
             </Stack>
-            <div style={{ marginLeft: "35vmin" }}>
-              <ContainedButton onClick={onFinishClick}>update</ContainedButton>
+            <div
+              style={{
+                width: "50vmin",
+                display: "flex",
+                justifyContent: "flex-end",
+              }}
+            >
+              <ContainedButton
+                onClick={onFinishClick}
+                sx={{ fontSize: "100%" }}
+              >
+                업데이트
+              </ContainedButton>
             </div>
           </Grid>
         </Grid>

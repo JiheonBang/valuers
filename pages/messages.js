@@ -151,7 +151,7 @@ export default function Messages() {
 
     return (
       <>
-        {chatData.length !== 0 ? (
+        {msgId.length !== 0 ? (
           <div
             style={{
               display: "flex",

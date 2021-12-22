@@ -95,69 +95,80 @@ function Onboarding() {
 
   const onNextClickLink = (e) => {
     e.preventDefault();
+
+    const regex = /^[a-z|A-Z|0-9]+$/;
+
     if (givenInfo.userLink) {
-      if (!findLink) {
-        e.target.reset();
-        setNumberOnb((prev) => prev + 1);
+      if (regex.test(givenInfo.userLink)) {
+        if (!findLink) {
+          e.target.reset();
+          setNumberOnb((prev) => prev + 1);
+        } else {
+          alert("중복된 아이디입니다.");
+        }
       } else {
-        alert("링크를 다시 한 번 확인해 주세요!");
+        alert("아이디에는 영어와 숫자만 사용 가능합니다.");
       }
     } else {
-      alert(`필수 항목입니다.\n입력해주세요!`);
+      alert(`필수 항목입니다.\n아이디를 입력해주세요!`);
     }
   };
 
   const onFinishClick = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    const formData = new FormData();
-    formData.append("file", pickedImage);
-    formData.append("upload_preset", "userImage");
+    if (!(userJob && userCareer)) {
+      alert(`필수 항목입니다.\n직무와 경력을 입력해주세요!`);
+    } else {
+      setLoading(true);
+      const formData = new FormData();
+      formData.append("file", pickedImage);
+      formData.append("upload_preset", "userImage");
 
-    const data = await fetch(
-      "https://api.cloudinary.com/v1_1/valuers/image/upload",
-      {
-        method: "POST",
-        body: formData,
-      }
-    ).then((res) => res.json());
+      const data = await fetch(
+        "https://api.cloudinary.com/v1_1/valuers/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      ).then((res) => res.json());
 
-    const ok = window.confirm("저장하시겠습니까?");
-    if (ok) {
-      if (data.secure_url) {
-        dbService
-          .collection("userInfo")
-          .doc(`${user.uid}`)
-          .set({
-            userId: user.uid,
-            userEmail: user.email,
-            userName: givenInfo.userName,
-            userLink: givenInfo.userLink,
-            userImage: data.secure_url,
-            userJob: userJob,
-            userCareer: userCareer,
-            isOnboarding: true,
-          })
-          .then(() => {
-            router.push(`/${givenInfo.userLink}`);
-          });
-      } else {
-        dbService
-          .collection("userInfo")
-          .doc(`${user.uid}`)
-          .set({
-            userId: user.uid,
-            userEmail: user.email,
-            userName: givenInfo.userName,
-            userImage: null,
-            userLink: givenInfo.userLink,
-            userJob: userJob,
-            userCareer: userCareer,
-            isOnboarding: true,
-          })
-          .then(() => {
-            router.push(`/${givenInfo.userLink}`);
-          });
+      const ok = window.confirm("저장하시겠습니까?");
+      if (ok) {
+        if (data.secure_url) {
+          dbService
+            .collection("userInfo")
+            .doc(`${user.uid}`)
+            .set({
+              userId: user.uid,
+              userEmail: user.email,
+              userName: givenInfo.userName,
+              userLink: givenInfo.userLink,
+              userImage: data.secure_url,
+              userJob: userJob,
+              userCareer: userCareer,
+              isOnboarding: true,
+            })
+            .then(() => {
+              router.push(`/${givenInfo.userLink}`);
+            });
+        } else {
+          dbService
+            .collection("userInfo")
+            .doc(`${user.uid}`)
+            .set({
+              userId: user.uid,
+              userEmail: user.email,
+              userName: givenInfo.userName,
+              userImage: null,
+              userLink: givenInfo.userLink,
+              userJob: userJob,
+              userCareer: userCareer,
+              isOnboarding: true,
+            })
+            .then(() => {
+              router.push(`/${givenInfo.userLink}`);
+            });
+        }
       }
     }
   };
@@ -295,19 +306,24 @@ function Onboarding() {
                   variant="standard"
                   onChange={onChangeData}
                 />
-
-                <ContainedButton
+                <div
                   style={{
-                    width: "1vmin",
-                    padding: "1vmin 1vmin",
-                    fontSize: "2vmin",
-                    marginLeft: "50vmin",
+                    width: "60vmin",
+                    display: "flex",
+                    justifyContent: "flex-end",
                   }}
-                  variant="outlined"
-                  type="submit"
                 >
-                  다음
-                </ContainedButton>
+                  <ContainedButton
+                    sx={{
+                      width: "fit-content",
+                      padding: "1vmin 1vmin",
+                      fontSize: "100%",
+                    }}
+                    type="submit"
+                  >
+                    다음
+                  </ContainedButton>
+                </div>
               </Box>
             </>
           ) : numberOnb === 2 ? (
@@ -340,37 +356,44 @@ function Onboarding() {
                   {progressCircle}
                   {progressCircle}
                 </div>
-                <h2>링크를 입력해 주세요.</h2>
+                <h2>아이디를 입력해 주세요.</h2>
                 <h5 style={{ color: "#AFAFAF" }}>
-                  프로필 링크로 사용됩니다!
+                  프로필 링크로 사용됩니다! 영어와 숫자만 입력 가능해요.
                   <div style={{ marginBottom: "5px" }}></div>
-                  www.valuers.com/@{givenInfo.userLink}
+                  <span style={{ color: "#5E54F3" }}>
+                    www.valuers.com/{givenInfo.userLink}
+                  </span>
                 </h5>
                 <TextField
                   required
                   name="userLink"
                   id="userLink"
-                  label="링크"
+                  label="아이디"
                   variant="standard"
                   onChange={onChangeData}
                 />
                 {givenInfo.userLink ? (
                   findLink ? (
                     <div style={{ color: "red" }}>
-                      이미 존재하는 링크입니다.
+                      이미 존재하는 아이디입니다.
                     </div>
                   ) : (
-                    <div style={{ color: "blue" }}>사용 가능한 링크입니다.</div>
+                    <div style={{ color: "blue" }}>
+                      사용 가능한 아이디입니다.
+                    </div>
                   )
                 ) : null}
 
-                <Stack spacing={1.5} direction="row">
+                <Stack
+                  spacing={1.5}
+                  direction="row"
+                  sx={{ width: "60vmin", justifyContent: "flex-end" }}
+                >
                   <TextButton
                     style={{
-                      width: "10vmin",
-                      padding: "1vmin 1.5vmin",
-                      fontSize: "2vmin",
-                      marginLeft: "40vmin",
+                      width: "fit-content",
+                      padding: "1vmin 1vmin",
+                      fontSize: "100%",
                       color: "#AFAFAF",
                     }}
                     onClick={onPreviousClick}
@@ -379,9 +402,9 @@ function Onboarding() {
                   </TextButton>
                   <ContainedButton
                     style={{
-                      width: "10vmin",
-                      padding: "1vmin 1.5vmin",
-                      fontSize: "2vmin",
+                      width: "fit-content",
+                      padding: "1vmin 1vmin",
+                      fontSize: "100%",
                       marginLeft: "2vmin",
                     }}
                     variant="outlined"
@@ -467,11 +490,11 @@ function Onboarding() {
                 <label
                   htmlFor="userImage"
                   style={{
-                    width: "13vmin",
+                    width: "fit-content",
                     textAlign: "center",
-                    fontSize: "2vmin",
+                    fontSize: "100%",
                     color: "#AAAAAA",
-                    padding: "1vmin",
+                    padding: "1vmin 2vmin",
                     border: "2px solid #AFAFAF",
                     borderRadius: "10px",
                     cursor: "pointer",
@@ -480,44 +503,48 @@ function Onboarding() {
                   upload
                 </label>
 
-                <Stack spacing={1.5} direction="row" alignItems="center">
+                <Stack
+                  spacing={1.5}
+                  direction="row"
+                  alignItems="center"
+                  sx={{ width: "60vmin", justifyContent: "space-between" }}
+                >
                   <TextButton
                     style={{
-                      width: "10vmin",
-                      padding: "1vmin 1.5vmin",
-                      fontSize: "2vmin",
+                      width: "fit-content",
+                      padding: "1vmin 1vmin",
+                      fontSize: "100%",
                       color: "#AFAFAF",
                     }}
                     onClick={onDelayClick}
                   >
                     다음에 하기
                   </TextButton>
-                  <TextButton
-                    style={{
-                      width: "10vmin",
-                      height: "5vmin",
-                      padding: "1vmin 1.5vmin",
-                      fontSize: "2vmin",
-                      marginLeft: "30vmin",
-                      color: "#AFAFAF",
-                    }}
-                    onClick={onPreviousClick}
-                  >
-                    이전
-                  </TextButton>
-                  <ContainedButton
-                    style={{
-                      width: "10vmin",
-                      height: "5vmin",
-                      padding: "1vmin 1.5vmin",
-                      fontSize: "2vmin",
-                      marginLeft: "2vmin",
-                    }}
-                    variant="outlined"
-                    type="submit"
-                  >
-                    다음
-                  </ContainedButton>
+                  <div>
+                    <TextButton
+                      style={{
+                        width: "fit-content",
+                        padding: "1vmin 1vmin",
+                        fontSize: "100%",
+                        color: "#AFAFAF",
+                      }}
+                      onClick={onPreviousClick}
+                    >
+                      이전
+                    </TextButton>
+                    <ContainedButton
+                      style={{
+                        width: "fit-content",
+                        padding: "1vmin 1vmin",
+                        fontSize: "100%",
+                        marginLeft: "2vmin",
+                      }}
+                      variant="outlined"
+                      type="submit"
+                    >
+                      다음
+                    </ContainedButton>
+                  </div>
                 </Stack>
               </Box>
             </>
@@ -557,8 +584,8 @@ function Onboarding() {
                   <div style={{ marginBottom: "5px" }}></div>
                   기타를 선택해 주세요!
                 </h5>
-                <Stack spacing={3} direction="row">
-                  <Box sx={{ minWidth: "30vmin" }}>
+                <Grid container spacing={3}>
+                  <Grid item sx={{ minWidth: "30vmin" }} xs={12} md={6}>
                     <FormControl fullWidth>
                       <InputLabel id="userJob">직무</InputLabel>
                       <Select
@@ -581,8 +608,8 @@ function Onboarding() {
                         <MenuItem value="기타">기타</MenuItem>
                       </Select>
                     </FormControl>
-                  </Box>
-                  <Box sx={{ minWidth: "30vmin" }}>
+                  </Grid>
+                  <Grid item sx={{ minWidth: "30vmin" }} xs={12} md={6}>
                     <FormControl fullWidth>
                       <InputLabel id="userCareer">경력</InputLabel>
                       <Select
@@ -599,16 +626,19 @@ function Onboarding() {
                         <MenuItem value="7년 차 이상">7년 차 이상</MenuItem>
                       </Select>
                     </FormControl>
-                  </Box>
-                </Stack>
+                  </Grid>
+                </Grid>
 
-                <Stack spacing={1.5} direction="row">
+                <Stack
+                  spacing={1.5}
+                  direction="row"
+                  sx={{ width: "60vmin", justifyContent: "flex-end" }}
+                >
                   <TextButton
                     style={{
-                      width: "10vmin",
-                      padding: "1vmin 1.5vmin",
-                      fontSize: "2vmin",
-                      marginLeft: "40vmin",
+                      width: "fit-content",
+                      padding: "1vmin 1vmin",
+                      fontSize: "100%",
                       color: "#AFAFAF",
                     }}
                     onClick={onPreviousClick}
@@ -617,9 +647,9 @@ function Onboarding() {
                   </TextButton>
                   <ContainedLoadingButton
                     style={{
-                      width: "10vmin",
-                      padding: "1vmin 1.5vmin",
-                      fontSize: "2vmin",
+                      width: "fit-content",
+                      padding: "1vmin 1vmin",
+                      fontSize: "100%",
                       marginLeft: "2vmin",
                     }}
                     variant="outlined"
