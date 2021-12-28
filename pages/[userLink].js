@@ -623,19 +623,16 @@ function UserLink({ pageUser, notionUser, notionRes }) {
                 >
                   <h2>노션을 등록해 보세요!</h2>
                   <h3 style={{ fontWeight: "400", marginTop: "-0.3vmin" }}>
-                    하나 이상 등록하셔야 프로필이
+                    멋진 기회들이 생길 거예요😎
                   </h3>
-                  <h3 style={{ fontWeight: "400", marginTop: "-1vmin" }}>
-                    다른 사람들에게 노출됩니다.
-                  </h3>
-                  <ContainedButton onClick={addClick}>
+                  <OutlinedButton onClick={addClick}>
                     노션 추가하기
-                  </ContainedButton>
+                  </OutlinedButton>
                 </Grid>
                 <Grid
                   item
                   xs={12}
-                  md={3}
+                  md={4}
                   sx={{
                     display: "flex",
                     flexDirection: "column",
@@ -643,20 +640,16 @@ function UserLink({ pageUser, notionUser, notionRes }) {
                     alignItems: "center",
                   }}
                 >
-                  <h3>잘 모르겠다면?</h3>
-
-                  <a
-                    href="https://ossified-language-542.notion.site/Valuers-46e2fe1f4c4d4626b46d79b6125c7fe0"
-                    target="_blank"
-                    rel="noreferrer"
-                    style={{
-                      color: "#5254F3",
-                      borderRadius: "0%",
-                      borderBottom: "0.5px solid",
-                    }}
-                  >
-                    가이드라인 보기
-                  </a>
+                  <h3>노션 포트폴리오가 없으신가요?</h3>
+                  <ContainedButton>
+                    <a
+                      href="https://ossified-language-542.notion.site/Valuers-46e2fe1f4c4d4626b46d79b6125c7fe0"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      템플릿 보러가기
+                    </a>
+                  </ContainedButton>
                 </Grid>
               </Grid>
             ) : (

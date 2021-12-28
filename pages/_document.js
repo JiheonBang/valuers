@@ -24,6 +24,14 @@ export default class MyDocument extends Document {
           `,
             }}
           />
+          <meta
+            name="description"
+            content="노션 기반 포트폴리오 공유 서비스, Valuers"
+          />
+          <meta
+            name="keywords"
+            content="노션, Notion, 템플릿, 스타트업, 포트폴리오, SaaS, 취업, 노션 포트폴리오, 노션폴리오"
+          />
           <meta property="og:url" content="valuers.me" />
           <meta property="og:type" content="website" />
           <meta
